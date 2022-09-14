@@ -53,9 +53,9 @@ describe('GamingHub User Login', () => {
     //     await expect(await HomeScreen.profileHeaderGaming).toHaveTextContaining('lebiro1679');
     // });
 
-    it('Login with Google', async () => {
-        await HomeScreen.tapLetsPlay();
-        await HomeScreen.goingToLogin('Gaming');
-        await LoginScreen.GoogleButton.click();
-    });
+    // it('Login with Google', async () => {
+    //     await HomeScreen.tapLetsPlay();
+    //     await HomeScreen.goingToLogin('Gaming');
+    //     await LoginScreen.GoogleButton.click();
+    // });
 });

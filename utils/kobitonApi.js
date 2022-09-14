@@ -23,7 +23,7 @@ const getdevices = async () => {
     acticeDevices.sort((a, b) => parseInt(b.platformVersion) - parseInt(a.platformVersion));
 
     let list = [];
-    for (let i = 0; i<10; i++){
+    for (let i = 0, k = 0; i< acticeDevices.length; i++, k++){
         // let dev = acticeDevices[Math.floor(Math.random() * acticeDevices.length)];
         let device = {
             sessionName:        process.env.SESSION_NAME,
@@ -41,6 +41,10 @@ const getdevices = async () => {
             autoAcceptAlerts:   true,
         };
         list.push(device);
+
+        if (k >= 10){
+            break;
+        }
     }
 
     await promises.writeFile(filePath, JSON.stringify(list));
