@@ -108,7 +108,7 @@ export const config: WebdriverIO.Config = {
     // if browser driver or grid doesn't send response
     connectionRetryTimeout: 120000,
     // Default request retries count
-    connectionRetryCount: 3,
+    connectionRetryCount: 0,
     // Test runner services
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new

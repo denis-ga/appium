@@ -28,6 +28,9 @@ class HomeScreen extends AppScreen {
     private get loginButtonNTC () { return $('//*[@resource-id="com.uefa.euro2016.beta:id/login_btn"]'); }
     get profileHeaderNTC () { return $('//*[@resource-id="com.uefa.euro2016.beta:id/profile_header_name"]'); }
 
+    get GooglePassReject () { return $('//*[@resource-id="com.google.android.gms:id/credential_save_reject"]'); }
+    get GooglePassConfirm () { return $('//*[@resource-id="com.google.android.gms:id/credential_save_confirm"]'); }
+
     async tapLetsPlay() {
         await this.letsButton.click();
     }

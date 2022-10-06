@@ -8,13 +8,18 @@ describe('GamingHub User Login', () => {
     });
 
     afterEach(async () => {
-        await driver.reset();
+        // await driver.reset();
     });
 
     it('Login with Email and Password', async () => {
         await HomeScreen.tapLetsPlay();
         await HomeScreen.goingToLogin('Gaming');
         await LoginScreen.IDPLogin({ username: 'kobiton1@mailinator.com', password: 'Test123456!' });
+
+        if (await HomeScreen.GooglePassReject.isDisplayed()) {
+            await HomeScreen.GooglePassReject.click();
+        }
+
         await HomeScreen.TitleGaming.waitForDisplayed();
         await HomeScreen.clickMainMenu();
         await expect(await HomeScreen.profileHeaderGaming).toHaveTextContaining('kobiton1');
