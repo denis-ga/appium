@@ -19,3 +19,4 @@ chromeDriver
 
 reports/
 .env
+/utils/deviceList.json
