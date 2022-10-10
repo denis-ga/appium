@@ -11,7 +11,7 @@ const getdevices = async () => {
 
     const activeSession = sessionList.data.data.filter(session =>
         session.userId === 128089 && session.state === 'START'
-        && session.name === 'Automation Tests for UCL');
+        && session.name === process.env.SESSION_NAME);
 
     for (let i = 0; i<activeSession.length; i++){
         await axios.delete(`https://api.kobiton.com/v1/sessions/${activeSession[i].id}/terminate`, {
