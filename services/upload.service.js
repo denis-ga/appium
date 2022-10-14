@@ -51,7 +51,7 @@ async function main() {
             });
 
             console.log('Step 2: Upload File To S3');
-            const uploaddile = await new Promise((resolve, reject) => {
+            const uploadFile = await new Promise((resolve, reject) => {
                 fs.createReadStream(app_path).pipe(
                     request(
                         {
@@ -62,7 +62,7 @@ async function main() {
                                 'Content-Type': 'application/octet-stream',
                                 'x-amz-tagging': 'unsaved=true'
                             }
-                        },  
+                        },
                         function (err, res, body) {
                             if (err) {
                                 console.log('Upload file Error', err);

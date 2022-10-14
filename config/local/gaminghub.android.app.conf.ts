@@ -22,14 +22,14 @@ config.capabilities = [
         // For W3C the appium capabilities need to have an extension prefix
         // http://appium.io/docs/en/writing-running-appium/caps/
         // This is `appium:` for all Appium Capabilities which can be found here
-        'appium:deviceName': 'Pixel 2 API 29',
-        'appium:platformVersion': '10',
+        'appium:deviceName': 'Pixel 4 API 31',
+        'appium:platformVersion': '12',
         'appium:orientation': 'PORTRAIT',
         'appium:automationName': 'UiAutomator2',
         // The path to the app
-        // 'appium:app': join(process.cwd(), './apps/Android-NativeDemoApp-0.4.0.apk'),
-        'appium:appPackage': 'com.uefa.eurofantasy.adhoc',
-        'appium:appActivity': 'com.uefa.gaminghub.SplashActivity',
+        'appium:app': join(process.cwd(), './apps/gaminghub-pre.apk'),
+        // 'appium:appPackage': 'com.uefa.eurofantasy.adhoc',
+        // 'appium:appActivity': 'com.uefa.gaminghub.SplashActivity',
         // @ts-ignore
         // 'appium:appWaitActivity': 'com.uefa.gaminghub.MainActivity',
         'appium:newCommandTimeout': 240,

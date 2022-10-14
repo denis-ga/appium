@@ -2,6 +2,8 @@ import LoginScreen from '../screenobjects/LoginScreen';
 import HomeScreen from '../screenobjects/HomeScreen';
 import WebViewScreen from '../screenobjects/WebviewScreen';
 import { CONTEXT_REF } from '../helpers/WebView';
+// const { ReportingApi } = require('@reportportal/agent-js-webdriverio');
+
 
 describe('GamingHub User Login', () => {
     beforeEach(async () => {
@@ -16,11 +18,11 @@ describe('GamingHub User Login', () => {
         await HomeScreen.goingToLogin('Gaming');
         await LoginScreen.IDPLogin({ username: 'kobiton1@mailinator.com', password: 'Test123456!' });
 
-        if (await HomeScreen.GooglePassReject.isDisplayed()) {
+        await HomeScreen.TitleGaming.waitForDisplayed();
+
+        if (await HomeScreen.GooglePassReject.isExisting()) {
             await HomeScreen.GooglePassReject.click();
         }
-
-        await HomeScreen.TitleGaming.waitForDisplayed();
         await HomeScreen.clickMainMenu();
         await expect(await HomeScreen.profileHeaderGaming).toHaveTextContaining('kobiton1');
     });
