@@ -3,33 +3,35 @@ const fs = require('fs');
 const btoa = require('btoa');
 const dotenv = require('dotenv');
 dotenv.config();
-const { getKeyValue, TOKEN_DICTIONARY } = require('./storage.service');
+const { getKeyValue } = require('./storage.service');
 
-const user_name =  process.env.KOBITON_USER;
+const username =  process.env.KOBITON_USER;
 const apikey =  process.env.KOBITON_KEY;
-const file_name =  process.env.APP_FILE_NAME;
-const app_path = process.env.APP_PATH;
-const app_id = process.env.APP_ID;
-const stats = fs.statSync(app_path);
 
-const inputBody = {
-    filename: file_name
-};
+const appID = process.env.APP_ID;
 
-if (app_id) {
-    inputBody.appId = app_id;
-}
-
-const base64EncodedBasicAuth = btoa(`${user_name}:${apikey}`);
+const base64EncodedBasicAuth = btoa(`${username}:${apikey}`);
 const headers = {
     'Authorization': `Basic ${base64EncodedBasicAuth}`,
     'Content-Type':'application/json',
     'Accept':'application/json'
 };
 
-async function main() {
+const main = async (app) => {
     try {
-        if (await getKeyValue('status')) {
+        if (await getKeyValue(`${app}status`)) {
+            const filename =  await getKeyValue(`${app}name`);
+            const stats = fs.statSync(`./apps/${filename}`);
+            const kobitonFilename = process.env.APP_FILE_NAME + filename;
+
+            const inputBody = {
+                filename: kobitonFilename
+            };
+
+            if (appID) {
+                inputBody.appId = appID;
+            }
+
             console.log('Step 1: Generate Upload URL');
             const getUrl = await new Promise((resolve, reject) => {
                 request({
@@ -51,8 +53,8 @@ async function main() {
             });
 
             console.log('Step 2: Upload File To S3');
-            const uploadFile = await new Promise((resolve, reject) => {
-                fs.createReadStream(app_path).pipe(
+            await new Promise((resolve, reject) => {
+                fs.createReadStream(`./apps/${filename}`).pipe(
                     request(
                         {
                             method: 'PUT',
@@ -76,13 +78,13 @@ async function main() {
             });
 
             console.log('Step 3: Create Application Or Version');
-            const createAppVersion = await new Promise((resolve, reject) => {
+            await new Promise((resolve, reject) => {
                 request({
                     url: 'https://api.kobiton.com/v1/apps',
                     json: true,
                     method: 'POST',
                     body: {
-                        'filename': `${file_name}`,
+                        'filename': `${kobitonFilename}`,
                         'appPath': `${getUrl.appPath}`
                     },
                     headers: headers
@@ -102,6 +104,18 @@ async function main() {
     } catch (error) {
         console.log('ERROR', error);
     }
-}
+};
 
-main();
+const uploadAllApps = async () => {
+    let Apps = ['UCL', 'UCL-1', 'UEL', 'UEL-1'];
+
+    let uplApps = [];
+
+    for (const app of Apps){
+        uplApps.push(await main(app));
+    }
+
+    await Promise.allSettled(uplApps);
+};
+
+uploadAllApps();
