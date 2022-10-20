@@ -3,7 +3,7 @@ const fs = require('fs');
 const btoa = require('btoa');
 const dotenv = require('dotenv');
 dotenv.config();
-const { getKeyValue } = require('./storage.service');
+const { getKeyValue, saveKeyValue } = require('./storage.service');
 
 const username =  process.env.KOBITON_USER;
 const apikey =  process.env.KOBITON_KEY;
@@ -94,6 +94,7 @@ const main = async (app) => {
                         return reject(err);
                     }
                     console.log('Response body:', body);
+                    saveKeyValue(`${app}status`, false);
                     resolve(body);
                     console.log('Done');
                 });
@@ -107,7 +108,7 @@ const main = async (app) => {
 };
 
 const uploadAllApps = async () => {
-    let Apps = ['UCL', 'UCL-1', 'UEL', 'UEL-1'];
+    let Apps = ['Gaming', 'UCL', 'UCL-1', 'UEL', 'UEL-1'];
 
     let uplApps = [];
 

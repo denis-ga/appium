@@ -5,7 +5,7 @@ test.describe.serial('Download and Upload', () => {
     test('Download file', async ({ page }) => {
         await page.goto('https://install.appcenter.ms/orgs/online-development-2jmn/apps/gaming-hub-android-adhoc/distribution_groups/all-users-of-gaming-hub-android-adhoc');
 
-        const appDate = await getKeyValue('appDate');
+        const appDate = await getKeyValue(TOKEN_DICTIONARY.appDate);
         const element = await page.locator('//*[@id="app"]/div/div/div/div[2]/div[2]/div[2]/div/div[1]/div[1]/div[2]/div/div[1]/div[1]/div[1]').innerText().valueOf();
         console.log(element);
 
@@ -23,9 +23,10 @@ test.describe.serial('Download and Upload', () => {
             await download.delete();
 
             await saveKeyValue(TOKEN_DICTIONARY.appDate, element);
-            await saveKeyValue(TOKEN_DICTIONARY.status, true);
+            await saveKeyValue('Gamingstatus', true);
+            await saveKeyValue('Gamingname', download.suggestedFilename());
         } else {
-            await saveKeyValue(TOKEN_DICTIONARY.status, false);
+            await saveKeyValue('Gamingstatus', false);
         }
     });
 });
